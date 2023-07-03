@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_jokenpo"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.draccotech.myapplication.HomeFragment"
+        android:label="Jokenpô"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_game_nav"
+            app:destination="@id/game_nav" />
+    </fragment>
+    <navigation android:id="@+id/game_nav"
+        app:startDestination="@id/playerFragment">
+        <fragment
+            android:id="@+id/playerFragment"
+            android:name="com.draccotech.myapplication.PlayerFragment"
+            android:label="Jogador"
+            tools:layout="@layout/fragment_player" />
+        <fragment
+            android:id="@+id/resultFragment"
+            android:name="com.draccotech.myapplication.ResultFragment"
+            android:label="Resultado"
+            tools:layout="@layout/fragment_result" />
+    </navigation>
+</navigation>
