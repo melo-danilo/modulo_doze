@@ -3,6 +3,7 @@ package com.draccotech.myapplication
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -31,11 +32,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        Log.d("LifeCycle","onCreate")
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         val toolbar = binding.toolbar
 
         setContentView(binding.root)
         setSupportActionBar(toolbar)
+
+        savedInstanceState?.getString("editTextValue")?.let {
+            binding.editTextText.setText(it)
+        }
 
         drawer = binding.root
         navDrawer = binding.navView
@@ -59,6 +66,26 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putString("editTextValue", binding.editTextText.text.toString())
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("LifeCycle","onResume")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("LifeCycle","onStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("LifeCycle","onDestroy")
+    }
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
