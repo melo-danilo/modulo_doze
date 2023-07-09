@@ -36,22 +36,16 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Log.d("LifeCycle","onCreate")
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        val toolbar = binding.toolbar
-
-        setContentView(binding.root)
-        setSupportActionBar(toolbar)
-
         savedInstanceState?.getString("editTextValue")?.let {
             binding.editTextText.setText(it)
         }
 
-        drawer = binding.root
-        navDrawer = binding.navView
-        bottomNav = binding.bottomNav
+        setupBinding()
+        setupNavigation()
 
+    }
+
+    private fun setupNavigation() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
 
@@ -60,7 +54,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when(destination.id){
                 R.id.homeFragment -> bottomNav.visibility = View.GONE
-                    else -> bottomNav.visibility = View.VISIBLE
+                else -> bottomNav.visibility = View.VISIBLE
             }
         }
 
@@ -89,7 +83,22 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             }
             true
         }
+    }
 
+    private fun setupBinding() {
+        Log.d("LifeCycle","onCreate")
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val toolbar = binding.toolbar
+
+        setContentView(binding.root)
+        setSupportActionBar(toolbar)
+
+
+
+        drawer = binding.root
+        navDrawer = binding.navView
+        bottomNav = binding.bottomNav
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
